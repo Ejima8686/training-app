@@ -752,6 +752,8 @@ document.getElementById('importFile').addEventListener('change', async e => {
     if (!confirm('今のデータをバックアップの内容で上書きします。よろしいですか？')) return;
     d.planHistory.sort((a, b) => a.from.localeCompare(b.from));
     data = { version: 1, planHistory: d.planHistory, records: d.records };
+    // 読み込んだ直後は、端末のデータとバックアップファイルが同じ内容なので「バックアップ済み」とみなす
+    setLS(LAST_BACKUP_KEY, todayStr());
     save(); render(); toast('バックアップを読み込みました');
   } catch { toast('このファイルは読み込めませんでした'); }
 });
